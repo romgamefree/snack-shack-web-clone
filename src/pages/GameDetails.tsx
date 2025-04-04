@@ -6,7 +6,7 @@ import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ArrowLeft } from "lucide-react";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -211,11 +211,15 @@ const GameDetails = () => {
             <Breadcrumb>
               <BreadcrumbList>
                 <BreadcrumbItem>
-                  <BreadcrumbLink as={Link} to="/">Home</BreadcrumbLink>
+                  <BreadcrumbLink asChild>
+                    <Link to="/">Home</Link>
+                  </BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator />
                 <BreadcrumbItem>
-                  <BreadcrumbLink as={Link} to={`/?category=${game.category}`}>{game.category}</BreadcrumbLink>
+                  <BreadcrumbLink asChild>
+                    <Link to={`/?category=${game.category}`}>{game.category}</Link>
+                  </BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator />
                 <BreadcrumbItem>
