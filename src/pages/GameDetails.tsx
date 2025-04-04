@@ -1,10 +1,20 @@
+
 import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ArrowLeft } from "lucide-react";
+import { Helmet } from "react-helmet";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
 
 // Sample game data (in a real app, this would come from an API)
 const gameData = {
@@ -165,49 +175,97 @@ const GameDetails = () => {
     );
   }
 
+  // JSON-LD structured data for the game
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "VideoGame",
+    "name": game.title,
+    "description": game.description,
+    "genre": game.category,
+    "image": game.image,
+    "offers": {
+      "@type": "Offer",
+      "availability": "https://schema.org/InStock",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Header />
-      <div className="container mx-auto px-4 py-8">
-        <Button variant="outline" onClick={handleBack} className="mb-4">
-          <ArrowLeft className="mr-2 h-4 w-4" /> Back
-        </Button>
-        
-        <div className="bg-white rounded-xl shadow-md overflow-hidden">
-          <div className="md:flex">
-            <div className="md:w-1/2">
-              <img 
-                src={game.image} 
-                alt={game.title}
-                className="w-full h-full object-cover"
-              />
-            </div>
-            <div className="p-6 md:w-1/2">
-              <div className="mb-6">
-                <span className="inline-block bg-gray-100 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mb-2">
-                  {game.category}
-                </span>
-                <h1 className="text-3xl font-bold mb-2">{game.title}</h1>
-                <p className="text-gray-600 mb-4">{game.description}</p>
+    <>
+      <Helmet>
+        <title>{game.title} - GameSnacks</title>
+        <meta name="description" content={game.description.substring(0, 160)} />
+        <meta property="og:title" content={`${game.title} - GameSnacks`} />
+        <meta property="og:description" content={game.description.substring(0, 160)} />
+        <meta property="og:image" content={game.image} />
+        <meta property="og:type" content="website" />
+        <script type="application/ld+json">
+          {JSON.stringify(jsonLd)}
+        </script>
+      </Helmet>
+      <div className="min-h-screen bg-gray-50">
+        <Header />
+        <main>
+          <div className="container mx-auto px-4 py-8">
+            <Breadcrumb>
+              <BreadcrumbList>
+                <BreadcrumbItem>
+                  <BreadcrumbLink as={Link} to="/">Home</BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator />
+                <BreadcrumbItem>
+                  <BreadcrumbLink as={Link} to={`/?category=${game.category}`}>{game.category}</BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator />
+                <BreadcrumbItem>
+                  <BreadcrumbPage>{game.title}</BreadcrumbPage>
+                </BreadcrumbItem>
+              </BreadcrumbList>
+            </Breadcrumb>
+            
+            <Button variant="outline" onClick={handleBack} className="mb-4 mt-4">
+              <ArrowLeft className="mr-2 h-4 w-4" /> Back
+            </Button>
+            
+            <article className="bg-white rounded-xl shadow-md overflow-hidden">
+              <div className="md:flex">
+                <div className="md:w-1/2">
+                  <img 
+                    src={game.image} 
+                    alt={`Screenshot of ${game.title} game`}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className="p-6 md:w-1/2">
+                  <header className="mb-6">
+                    <span className="inline-block bg-gray-100 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mb-2">
+                      {game.category}
+                    </span>
+                    <h1 className="text-3xl font-bold mb-2">{game.title}</h1>
+                    <p className="text-gray-600 mb-4">{game.description}</p>
+                  </header>
+                  
+                  <section className="mb-6">
+                    <h2 className="text-xl font-semibold mb-2">How to Play</h2>
+                    <p className="text-gray-600">{game.instructions}</p>
+                  </section>
+                  
+                  <Button 
+                    className="w-full py-6 text-lg" 
+                    onClick={() => navigate(`/play/${id}`)}
+                    aria-label={`Play ${game.title} now`}
+                  >
+                    Play Now
+                  </Button>
+                </div>
               </div>
-              
-              <div className="mb-6">
-                <h2 className="text-xl font-semibold mb-2">How to Play</h2>
-                <p className="text-gray-600">{game.instructions}</p>
-              </div>
-              
-              <Button 
-                className="w-full py-6 text-lg" 
-                onClick={() => navigate(`/play/${id}`)}
-              >
-                Play Now
-              </Button>
-            </div>
+            </article>
           </div>
-        </div>
+        </main>
+        <Footer />
       </div>
-      <Footer />
-    </div>
+    </>
   );
 };
 
