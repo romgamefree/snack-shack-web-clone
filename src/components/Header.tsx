@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Search, Menu, X } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -13,14 +14,14 @@ const Header = () => {
       <div className="container mx-auto px-4 py-3 flex items-center justify-between">
         {/* Logo */}
         <div className="flex items-center">
-          <a href="/" className="flex items-center">
+          <Link to="/" className="flex items-center">
             <span className="text-2xl font-bold bg-gradient-to-r from-primary to-primary-light bg-clip-text text-transparent">GameSnacks</span>
-          </a>
+          </Link>
         </div>
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-6">
-          <a href="#" className="text-gray-700 hover:text-primary font-medium">Home</a>
+          <Link to="/" className="text-gray-700 hover:text-primary font-medium">Home</Link>
           <a href="#" className="text-gray-700 hover:text-primary font-medium">Categories</a>
           <a href="#" className="text-gray-700 hover:text-primary font-medium">New Games</a>
           <a href="#" className="text-gray-700 hover:text-primary font-medium">Popular</a>
@@ -70,7 +71,7 @@ const Header = () => {
       {isMenuOpen && (
         <div className="md:hidden absolute top-full left-0 right-0 bg-white border-b border-gray-200 shadow-md">
           <nav className="container mx-auto px-4 py-3 flex flex-col">
-            <a href="#" className="py-2 text-gray-700 hover:text-primary">Home</a>
+            <Link to="/" className="py-2 text-gray-700 hover:text-primary">Home</Link>
             <a href="#" className="py-2 text-gray-700 hover:text-primary">Categories</a>
             <a href="#" className="py-2 text-gray-700 hover:text-primary">New Games</a>
             <a href="#" className="py-2 text-gray-700 hover:text-primary">Popular</a>

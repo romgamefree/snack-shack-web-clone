@@ -1,11 +1,10 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ArrowLeft } from "lucide-react";
-import { useNavigate } from "react-router-dom";
 
 // Sample game data (in a real app, this would come from an API)
 const gameData = {
@@ -197,7 +196,10 @@ const GameDetails = () => {
                 <p className="text-gray-600">{game.instructions}</p>
               </div>
               
-              <Button className="w-full py-6 text-lg" onClick={() => window.open(game.playUrl, "_blank")}>
+              <Button 
+                className="w-full py-6 text-lg" 
+                onClick={() => navigate(`/play/${id}`)}
+              >
                 Play Now
               </Button>
             </div>
