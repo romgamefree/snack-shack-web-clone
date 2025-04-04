@@ -10,31 +10,36 @@ import GameDetails from "./pages/GameDetails";
 import GamePlay from "./pages/GamePlay";
 import NotFound from "./pages/NotFound";
 
+// Create a new QueryClient instance outside the component
 const queryClient = new QueryClient();
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
+// Convert the App component to a function declaration style
+const App = () => {
+  return (
     <BrowserRouter>
       <HelmetProvider>
-        <Helmet>
-          <title>GameSnacks Clone - Play Fun Instant Games Online</title>
-          <meta name="description" content="Play free instant games online - GameSnacks offers fun, quick games with no downloads required. Enjoy puzzle, action, racing games and more!" />
-        </Helmet>
-        
-        <TooltipProvider>
-          <Toaster />
-          <Sonner />
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/game/:id" element={<GameDetails />} />
-            <Route path="/play/:id" element={<GamePlay />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </TooltipProvider>
+        <QueryClientProvider client={queryClient}>
+          <TooltipProvider>
+            <Helmet>
+              <title>GameSnacks Clone - Play Fun Instant Games Online</title>
+              <meta name="description" content="Play free instant games online - GameSnacks offers fun, quick games with no downloads required. Enjoy puzzle, action, racing games and more!" />
+            </Helmet>
+            
+            <Toaster />
+            <Sonner />
+            
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/game/:id" element={<GameDetails />} />
+              <Route path="/play/:id" element={<GamePlay />} />
+              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </TooltipProvider>
+        </QueryClientProvider>
       </HelmetProvider>
     </BrowserRouter>
-  </QueryClientProvider>
-);
+  );
+};
 
 export default App;
