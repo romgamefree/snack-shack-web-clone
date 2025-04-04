@@ -14,15 +14,16 @@ const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <HelmetProvider>
-      <Helmet>
-        <title>GameSnacks Clone - Play Fun Instant Games Online</title>
-        <meta name="description" content="Play free instant games online - GameSnacks offers fun, quick games with no downloads required. Enjoy puzzle, action, racing games and more!" />
-      </Helmet>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
+    <BrowserRouter>
+      <HelmetProvider>
+        <Helmet>
+          <title>GameSnacks Clone - Play Fun Instant Games Online</title>
+          <meta name="description" content="Play free instant games online - GameSnacks offers fun, quick games with no downloads required. Enjoy puzzle, action, racing games and more!" />
+        </Helmet>
+        
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/game/:id" element={<GameDetails />} />
@@ -30,9 +31,9 @@ const App = () => (
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
-        </BrowserRouter>
-      </TooltipProvider>
-    </HelmetProvider>
+        </TooltipProvider>
+      </HelmetProvider>
+    </BrowserRouter>
   </QueryClientProvider>
 );
 
