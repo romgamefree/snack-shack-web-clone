@@ -1,15 +1,17 @@
 
 import { Play } from "lucide-react";
+import { Link } from "react-router-dom";
 
 interface GameCardProps {
   title: string;
   image: string;
   category: string;
+  id: number;
 }
 
-const GameCard = ({ title, image, category }: GameCardProps) => {
+const GameCard = ({ title, image, category, id }: GameCardProps) => {
   return (
-    <div className="game-card">
+    <Link to={`/game/${id}`} className="game-card">
       <img 
         src={image} 
         alt={title}
@@ -23,7 +25,7 @@ const GameCard = ({ title, image, category }: GameCardProps) => {
       <div className="game-card-play">
         <Play className="h-4 w-4 text-white" />
       </div>
-    </div>
+    </Link>
   );
 };
 

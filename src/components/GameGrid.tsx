@@ -33,6 +33,7 @@ const GameGrid = ({ category }: GameGridProps) => {
         {games.map(game => (
           <GameCard 
             key={game.id}
+            id={game.id}
             title={game.title}
             image={game.image}
             category={game.category}

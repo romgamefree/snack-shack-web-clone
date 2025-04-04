@@ -27,6 +27,7 @@ const GameCollection = ({ title, games }: GameCollectionProps) => {
           {games.slice(0, 6).map(game => (
             <GameCard 
               key={game.id}
+              id={game.id}
               title={game.title}
               image={game.image}
               category={game.category}
