@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Header from "@/components/Header";
@@ -120,8 +119,12 @@ const gameData = {
   }
 };
 
+// Define a type for our game data
+type GameDataType = typeof gameData;
+type GameIdType = keyof GameDataType;
+
 const GameDetails = () => {
-  const { id } = useParams();
+  const { id } = useParams<{ id: string }>();
   const [game, setGame] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -131,8 +134,10 @@ const GameDetails = () => {
     const loadGame = () => {
       setLoading(true);
       setTimeout(() => {
-        if (id && gameData[id as keyof typeof gameData]) {
-          setGame(gameData[id as keyof typeof gameData]);
+        const numericId = id ? parseInt(id, 10) : 0;
+        // Check if the numeric ID exists in our gameData
+        if (id && numericId > 0 && gameData[numericId as GameIdType]) {
+          setGame(gameData[numericId as GameIdType]);
         }
         setLoading(false);
       }, 1500); // Simulate network delay
